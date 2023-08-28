@@ -20,38 +20,33 @@ using namespace std;
 
 // function to find factorial of given number}
 
+#include <iostream>
+#include <omp.h>
+using namespace std;
+
+// function to find factorial of given number
 unsigned int factorial(unsigned int n)
 {
-    int r; 
-    #pragma omp parallel sections
-    {
-        #pragma omp section 
-        
-            if (n == 0)
-            r = 1;
-            
-        #pragma omp section 
-        
-           r = n * factorial(n - 1);
-        
+    int factorial = 1;
+    #pragma omp parallel for ordered
+    for (int i = 0; i <n; ++i) {
+        #pragma omp ordered
+        std::cout << "Thread " << omp_get_thread_num() << " is processing iteration " << i << std::endl;
+   
+        // cout << "Hace " << i << "\n";
+        factorial *= i;
     }
-    return r;
-        
-    
+    return factorial;
 }
-
 
 // Driver code
 int main()
 {
- int num = 5;
- cout << "Factorial of "
- << num << " is " << factorial(num) << endl;
- return 0;
+    int num = 5;
+    cout << "Factorial of " << num << " is " << factorial(num) << endl;
+    
+    return 0;
 }
-// This code is contributed by Shivi_Aggarwal
-
-
 
 
 
