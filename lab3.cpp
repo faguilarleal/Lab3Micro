@@ -32,11 +32,25 @@ unsigned int factorial(unsigned int n)
     for (int i = 0; i <n; ++i) {
         #pragma omp ordered
         std::cout << "Thread " << omp_get_thread_num() << " is processing iteration " << i << std::endl;
-   
-        // cout << "Hace " << i << "\n";
         factorial *= i;
     }
     return factorial;
+}
+
+// function to find factorial of given number
+unsigned int factorial2(unsigned int n)
+{
+
+    if (n == 0)
+    return 1;
+
+    return n * factorial(n - 1);
+}
+
+int factorial3(int n)
+{
+// single line to find factorial
+return (n == 1 || n == 0) ? 1 : n * factorial3(n - 1);
 }
 
 // Driver code
